@@ -25,7 +25,7 @@ router.put('/', function(req, res, next) {
 		let settingToTrue = req.body.heard === true;
 		let foundBuzzWord = false;
 		for(let i = 0; i < my.buzzWords.length; i++) {
-			if(my.buzzWords[i].buzzWord === req.body.buzzWord && settingToTrue) {
+			if(my.buzzWords[i].buzzWord === req.body.buzzWord && settingToTrue && my.buzzWords[i].heard === false) {
 				my.buzzWords[i].heard = req.body.heard;
 				my.score += my.buzzWords[i].score;
 				foundBuzzWord = true;
