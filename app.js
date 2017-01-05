@@ -3,17 +3,22 @@ const express = require('express');
 const buzzwords = require('./routes/buzzwords');
 const buzzword = require('./routes/buzzword');
 const reset = require('./routes/reset');
+const buzzWords = require('./public/buzzWords');
 let app = express();
-let buzzWords = [];
 
 app.use('/buzzwords', buzzwords);
 app.use('/buzzword', buzzword);
 app.use('/reset', reset);
 
+app.use(function(req, res, next) {
+	req.setEncoding('utf8');
+	next();
+});
+
 app.get('/', function(req, res, next) {
 	res.type('html');
 	res.status(200);
-	fs.readFile('./index.html', function(err, content) {
+	fs.readFile('./public/index.html', 'utf8', function(err, content) {
 		res.send(content);
 		res.end();
 	});
