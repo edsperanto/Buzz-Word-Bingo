@@ -18,7 +18,28 @@ router.post('/', function(req, res, next) {
 });
 
 router.put('/', function(req, res, next) {
-
+	res.type('json');
+	res.status(200);
+	function checkConditions() {
+		let validFormat = typeof req.body.buzzWord === 'string' && typeof req.body.heard === 'boolean';
+		let settingToTrue = req.body.heard === true;
+		let foundBuzzWord = false;
+		for(let i = 0; i < my.buzzWords.length; i++) {
+			if(my.buzzWords[i].buzzWord === req.body.buzzWord && settingToTrue) {
+				my.buzzWords[i].heard = req.body.heard;
+				my.score += my.buzzWords[i].score;
+				foundBuzzWord = true;
+			}
+		}
+		return validFormat && settingToTrue && foundBuzzWord;
+	}
+	if(checkConditions()) {
+		res.send(`{ "success": true, "newScore": ${my.score} }`);
+		res.end();
+	}else{
+		res.send(`{ "success": false, "newScore": ${my.score} }`);
+		res.end();
+	}
 });
 
 module.exports = router;
