@@ -1,11 +1,13 @@
 const fs = require('fs');
 const express = require('express');
+const bodyParser = require('body-parser');
 const buzzwords = require('./routes/buzzwords');
 const buzzword = require('./routes/buzzword');
 const reset = require('./routes/reset');
 const buzzWords = require('./public/buzzWords');
 let app = express();
 
+app.use(bodyParser.json());
 app.use('/buzzwords', buzzwords);
 app.use('/buzzword', buzzword);
 app.use('/reset', reset);
