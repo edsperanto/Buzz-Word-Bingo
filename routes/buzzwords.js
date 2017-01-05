@@ -3,7 +3,9 @@ const buzzWords = require('./../public/buzzWords.js');
 let router = express.Router();
 
 router.get('/', function(req, res, next) {
-	console.log(buzzWords);
+	res.type('json');
+	res.status(200);
+	res.send(`{ "buzzWords": [${buzzWords}] }`);
 	res.end();
 });
 
