@@ -1,5 +1,5 @@
 const express = require('express');
-const buzzWords = require('./../public/buzzWords.js');
+const my = require('./../public/my.js');
 let router = express.Router();
 
 
