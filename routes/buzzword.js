@@ -42,4 +42,25 @@ router.put('/', function(req, res, next) {
 	}
 });
 
+router.delete('/', function(req, res, next) {
+	res.type('json');
+	res.status(200);
+	if(typeof req.body.buzzWord === 'string') {
+		let foundBuzzWord = false;
+		for(let i = 0; i < my.buzzWords.length; i++) {
+			if(my.buzzWords[i].buzzWord === req.body.buzzWord) {
+				my.buzzWords.splice(i, 1);
+				foundBuzzWord = true;
+			}
+		}
+		if(foundBuzzWord) {
+			res.send(`{ "success": true }`);
+			res.end();
+		}else{
+			res.send(`{ "success": false }`);
+			res.end();
+		}
+	}
+});
+
 module.exports = router;
