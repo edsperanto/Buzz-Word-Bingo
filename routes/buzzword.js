@@ -3,23 +3,17 @@ const express = require('express');
 const my = require('./../public/my.js');
 let router = express.Router();
 
-router.post('/', function(req, res, next) {
-	res.type('json');
-	res.status(200);
+router.post('/', function(req, res) {
 	if(typeof req.body.buzzWord === 'string' && typeof req.body.score === 'number') {
 		req.body['heard'] = false;
 		my.buzzWords.push(req.body);
-		res.send(`{ "success": true }`);
-		res.end();
+		res.json({ "success": true });
 	}else{
-		res.send(`{ "success": false }`);
-		res.end();
+		res.json({ "success": false });
 	}
 });
 
-router.put('/', function(req, res, next) {
-	res.type('json');
-	res.status(200);
+router.put('/', function(req, res) {
 	function checkConditions() {
 		let validFormat = typeof req.body.buzzWord === 'string' && typeof req.body.heard === 'boolean';
 		let settingToTrue = req.body.heard === true;
@@ -34,17 +28,13 @@ router.put('/', function(req, res, next) {
 		return validFormat && settingToTrue && foundBuzzWord;
 	}
 	if(checkConditions()) {
-		res.send(`{ "success": true, "newScore": ${my.score} }`);
-		res.end();
+		res.json({ "success": true, "newScore": my.score });
 	}else{
-		res.send(`{ "success": false, "newScore": ${my.score} }`);
-		res.end();
+		res.json({ "success": false, "newScore": my.score });
 	}
 });
 
-router.delete('/', function(req, res, next) {
-	res.type('json');
-	res.status(200);
+router.delete('/', function(req, res) {
 	if(typeof req.body.buzzWord === 'string') {
 		let foundBuzzWord = false;
 		for(let i = 0; i < my.buzzWords.length; i++) {
@@ -54,11 +44,9 @@ router.delete('/', function(req, res, next) {
 			}
 		}
 		if(foundBuzzWord) {
-			res.send(`{ "success": true }`);
-			res.end();
+			res.json({ "success": true });
 		}else{
-			res.send(`{ "success": false }`);
-			res.end();
+			res.json({ "success": false });
 		}
 	}
 });
